@@ -26,7 +26,7 @@ module TencentTrustsql
   def self.test_idm_user_register(mch_id="gb4pYTAXqzEI9TwDN5",product_code="productA")
     url = "https://baas.qq.com/tpki/tpki.TpkiSrv.UserApply"
     prv_key = private_key #TencentTrustsql.generate_pair_key #获取私钥
-    public_key = public_key #TencentTrustsql.genrate_public_key(prv_key) # 获取公钥
+    public_key = encoded_public_key(private_key) #TencentTrustsql.genrate_public_key(prv_key) # 获取公钥
     params = {
         version: '1.0',
         mch_sign: 'sig',

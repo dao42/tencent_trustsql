@@ -20,12 +20,19 @@ module TencentTrustsql
         # @private_key base64 encoded hex string or integer
         def public_key(private_key)
           if private_key.respond_to? :length
-            Base64.decode64(private_key).force_encoding('utf-8').unpack('H*').first.hex
+            private_key = Base64.decode64(private_key).force_encoding('utf-8').unpack('H*').first.hex
           end
 
           group = ECDSA::Group::Secp256k1
           public_key =group.generator.multiply_by_scalar(private_key)
           # ECDSA::Format::PointOctetString.encode(public_key, compression: true)
+        end
+
+        # 获取公钥字符串
+        def encoded_public_key private_key
+          pub_pair = public_key(private_key)
+          public_key_string = ECDSA::Format::PointOctetString.encode(pub_pair, compression: true).force_encoding('utf-8')
+          Base64.encode64(public_key_string).gsub(/[\n]/, '')
         end
 
 
