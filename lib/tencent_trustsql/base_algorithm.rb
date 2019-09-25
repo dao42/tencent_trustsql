@@ -2,8 +2,8 @@ require 'digest'
 module TencentTrustsql
   module BaseAlgorithm
 
-    def self.encode(algorithm="SHA256",data)
-      Digest::SHA256.hexdigest data
+    def self.encode(data) #algorithm="SHA256"
+      Digest::SHA256.digest data #hexdigest
     end
 
 

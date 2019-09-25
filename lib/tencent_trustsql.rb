@@ -4,6 +4,8 @@ require 'securerandom'
 require 'json'
 require "http"
 require 'tencent_trustsql/tool'
+require 'tencent_trustsql/base_algorithm'
+require 'tencent_trustsql/ecdsa_algorithm'
 
 
 module TencentTrustsql
