@@ -2,6 +2,9 @@
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "tencent_trustsql/version"
+require "tencent_trustsql/base_algorithm"
+require "tencent_trustsql/ecdsa_algorithm"
+
 
 Gem::Specification.new do |spec|
   spec.name          = "tencent_trustsql"
