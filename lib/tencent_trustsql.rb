@@ -1,4 +1,4 @@
-require "tencent_trustsql/version"
+
 require 'ecdsa'
 require 'securerandom'
 require 'json'
