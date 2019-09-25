@@ -19,18 +19,20 @@ module TencentTrustsql
     # ECDSA::Format::PointOctetString.encode(public_key, compression: true)
   end
 
-  def self.test_idm_user_register(mch_id="gb4pYTAXqzEI9TwDN5",product_code="productA",req_data)
-    url = "https://baas.trustsql.qq.com/idm_v1.1/api/user_cert/register"
+  def self.test_idm_user_register(mch_id="gb4pYTAXqzEI9TwDN5",product_code="productA")
+    url = "https://baas.qq.com/tpki/tpki.TpkiSrv.UserApply"
     prv_key = TencentTrustsql.generate_pair_key #获取私钥
     public_key = TencentTrustsql.genrate_public_key(prv_key) # 获取公钥
-    req_data.merge!({public_key: public_key})
     params = {
+        version: '1.0',
+        mch_sign: 'sig',
+        sign_type: 'ECDSA',
+        chain_id: 'ch_tencent_testchain',
         mch_id: mch_id,
         product_code: product_code,
-        req_data: req_data.to_json,
-        seq_no: SecureRandom.uuid.tr('-', ''),
-        time_stamp: Time.now.to_i,
-        type: "sign"
+        user_id: 1,
+        user_pub_key: public_key,
+        timestamp: Time.now.to_i
     }
 
     p sign = TencentTrustsql::EcdsaAlgorithm.sign(prv_key,params.to_json)
