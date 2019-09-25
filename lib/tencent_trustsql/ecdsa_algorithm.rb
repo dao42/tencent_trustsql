@@ -7,8 +7,10 @@ module TencentTrustsql
       digest =TencentTrustsql::BaseAlgorithm.encode(data)
       p "base algorithm : #{digest}"
       temp_key = 1 + SecureRandom.random_number(group.order - 1)
+
       signature = ECDSA.sign(group, private_key, digest, temp_key)
-      ECDSA::Format::SignatureDerString.encode(signature)
+      ECDSA::Format::SignatureDerString.encode(signature).force_encoding('utf-8')
+
     end
 
   end

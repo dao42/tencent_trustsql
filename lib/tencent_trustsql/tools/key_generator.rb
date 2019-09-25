@@ -18,13 +18,13 @@ module TencentTrustsql
 
         # 获取公钥
         # @private_key base64 encoded hex string or integer
-        def public_key(private_key)
-          if private_key.respond_to? :length
-            private_key = Base64.decode64(private_key).force_encoding('utf-8').unpack('H*').first.hex
+        def public_key(p_key)
+          if p_key.respond_to? :length
+            p_key = Base64.decode64(p_key).force_encoding('utf-8').unpack('H*').first.hex
           end
 
           group = ECDSA::Group::Secp256k1
-          public_key =group.generator.multiply_by_scalar(private_key)
+          public_key =group.generator.multiply_by_scalar(p_key)
           # ECDSA::Format::PointOctetString.encode(public_key, compression: true)
         end
 

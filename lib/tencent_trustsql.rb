@@ -23,24 +23,36 @@ module TencentTrustsql
     # ECDSA::Format::PointOctetString.encode(public_key, compression: true)
   end
 
-  def self.test_idm_user_register(mch_id="gb4pYTAXqzEI9TwDN5",product_code="productA")
+  def self.test_idm_user_register(mch_id="gb4pYTAXqzEI9TwDN5")
     url = "https://baas.qq.com/tpki/tpki.TpkiSrv.UserApply"
-    prv_key = private_key #TencentTrustsql.generate_pair_key #获取私钥
-    public_key = encoded_public_key(private_key) #TencentTrustsql.genrate_public_key(prv_key) # 获取公钥
+    p "=======用户私钥"
+    p prv_key = private_key #TencentTrustsql.generate_pair_key #获取私钥
+    p "=========="
+    public_key = encoded_public_key(prv_key) #TencentTrustsql.genrate_public_key(prv_key) # 获取公钥
     params = {
         version: '1.0',
-        mch_sign: 'sig',
         sign_type: 'ECDSA',
         chain_id: 'ch_tencent_testchain',
         mch_id: mch_id,
-        product_code: product_code,
         user_id: 1,
         user_pub_key: public_key,
         timestamp: Time.now.to_i
     }
 
-    p sign = TencentTrustsql::EcdsaAlgorithm.sign(prv_key,params.to_json)
-    params.merge!({sign: sign})
+    p "=============="
+    p mch_private_key = Base64.decode64("w6GwXdO+9Q5P81A1Aoc722GoOVUUntKZGCDFF8G4eM8=").force_encoding('utf-8').unpack('H*').first.hex
+    p "###########"
+    p encoded_public_key("w6GwXdO+9Q5P81A1Aoc722GoOVUUntKZGCDFF8G4eM8=")
+
+    query = params.sort.map do |k, v|
+      "#{k}=#{v}" if v.to_s != ''
+    end.compact.join('&')
+    p query
+
+    p sign = TencentTrustsql::EcdsaAlgorithm.sign(mch_private_key,query)
+
+    p base64_sign = Base64.encode64("#{sign}").gsub(/[\n]/, '')
+    params.merge!({mch_sign: base64_sign})
 
     response =HTTP.post(url, :form => params)
     p   response.body.to_s
