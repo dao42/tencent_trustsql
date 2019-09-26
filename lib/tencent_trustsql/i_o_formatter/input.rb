@@ -10,8 +10,9 @@ module TencentTrustsql
         Base64.decode64(hex_private_key).unpack('H*').first.hex
       end
 
-      def localize_sign hex_sign
-
+      def localize_sign der_sign
+        der_signature = Base64.decode(der_sign)
+        # signature =
       end
 
 

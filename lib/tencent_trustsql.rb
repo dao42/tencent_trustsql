@@ -6,13 +6,17 @@ require "http"
 require 'tencent_trustsql/tool'
 require 'tencent_trustsql/base_algorithm'
 require 'tencent_trustsql/ecdsa_algorithm'
-
+require 'tencent_trustsql/i_o_formatter'
 
 module TencentTrustsql
 
-  include TencentTrustsql::Tools::KeyGenerator
+  include Tools::KeyGenerator
+  include Tools::SignGenerator
+  include IOFormatter
 
   CURVE = ECDSA::Group::Secp256k1
+  # INPUT_FORMATTER = IOFormatter::Input.new
+  # OUT_FORMATTER = IOFormatter::Output.new
 
   # 产生一对公私钥, 并返回
   def self.generate_pair_key

@@ -1,8 +1,8 @@
 module TencentTrustsql
   module Algorithm
-    module Sha256
+    class Sha256
 
-      def encode(data) #algorithm="SHA256"
+      def self.encode(data) #algorithm="SHA256"
         Digest::SHA256.digest data #hexdigest
       end
 

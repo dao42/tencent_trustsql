@@ -13,8 +13,9 @@ module TencentTrustsql
         Base64.encode64(hex_string).gsub(/[\n]/, '')
       end
 
-      def out_sign hex_sign
-
+      def out_sign signature
+        signature_der_string = ECDSA::Format::SignatureDerString.encode(signature)
+        Base64.encode64(signature_der_string).gsub(/[\n]/, '')
       end
 
 
