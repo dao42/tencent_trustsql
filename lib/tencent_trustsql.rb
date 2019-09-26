@@ -12,6 +12,8 @@ module TencentTrustsql
 
   include TencentTrustsql::Tools::KeyGenerator
 
+  CURVE = ECDSA::Group::Secp256k1
+
   # 产生一对公私钥, 并返回
   def self.generate_pair_key
     group = ECDSA::Group::Secp256k1
