@@ -2,3 +2,6 @@ baas 使用 base(hexstring(data))格式数据
 ecdca gem 使用 data 格式数据
 这里提供转换逻辑
 对于module TencentTrustsql 封装了2个实例变量 input_formatter output_formatter
+
+hex:            'abcdefffffffff'
+hex_string:     '0xab/ox11/oxoo'
