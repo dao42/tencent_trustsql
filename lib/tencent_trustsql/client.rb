@@ -3,7 +3,7 @@ module TencentTrustsql
 
     include Api::Example
 
-    attr_accessor :private_key_out, :public_key_out, :mch_private_key, :user_id
+    attr_accessor :private_key_out, :public_key_out, :mch_private_key, :user_id, :mch_id
 
     def initialize private_key_out, user_id
       @private_key_out = private_key_out
