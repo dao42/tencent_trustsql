@@ -7,6 +7,7 @@ require 'tencent_trustsql/tool'
 require 'tencent_trustsql/base_algorithm'
 require 'tencent_trustsql/ecdsa_algorithm'
 require 'tencent_trustsql/i_o_formatter'
+require 'tencent_trustsql/config'
 
 module TencentTrustsql
 
