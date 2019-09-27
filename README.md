@@ -57,3 +57,20 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 Everyone interacting in the TencentTrustsql project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/tencent_trustsql/blob/master/CODE_OF_CONDUCT.md).
 
 
+```ruby
+require 'tencent_trustsql'
+TencentTrustsql.configure do |c|
+  c.mch_private_key = ''
+  c.mch_id = ''
+end
+client = TencentTrustsql::Client.new
+# 待替换为 资产直接转让申请 返回结果
+list = [
+        {
+            "account": "1LpqkE1FrCrumjV4aLLn4kL5P5NbyZ1PYD",
+            "sign_str": "5bdbc32055c4da8ea784783c41e9bd1b87b2280c1c714a3876e557ca0d4594fc",
+            "id": 1,
+        }
+    ]
+client.asset_transfer_submit "asset_transfer_submit_1", list
+```
