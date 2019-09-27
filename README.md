@@ -38,8 +38,25 @@ Or install it yourself as:
     client = TencentTrustsql::Client.new
     client.apply(options)
 ```
-
-
+## 资产直接转让提交
+```ruby
+require 'tencent_trustsql'
+TencentTrustsql.configure do |c|
+  c.mch_private_key = ''
+  c.mch_id = ''
+end
+client = TencentTrustsql::Client.new
+# 待替换为 资产直接转让申请 返回结果
+sign_str_list = [
+        {
+            "account": "1LpqkE1FrCrumjV4aLLn4kL5P5NbyZ1PYD",
+            "sign_str": "5bdbc32055c4da8ea784783c41e9bd1b87b2280c1c714a3876e557ca0d4594fc",
+            "id": 1,
+        }
+    ]
+transaction_id = "asset_transfer_submit_1"
+client.asset_transfer_submit transaction_id, sign_str_list
+```
 
 
 ## Development
