@@ -32,10 +32,10 @@ module TencentTrustsql
       # 
       # transaction_id 唯一标识一次交易的ID(资产直接转让申请 返回结果） string
       # sign_list 原待签名串（资产直接转让申请 返回结果） jsonArray
-      def asset_transfer_submit transaction_id, sign_list, node_ip = '123.207.249.116' , node_port = '15910', asset_type = 1,chain_id='ch_tencent_testchain'
+      def asset_transfer_submit transaction_id, sign_str_list, node_ip = '123.207.249.116' , node_port = '15910', asset_type = 0,chain_id='ch_tencent_testchain'
         action = "asset_issue_submit"
         url = "http://#{node_ip}:#{node_port}/#{action}"
-        sign_list_dump = sign_list.dup
+        sign_list_dump = sign_str_list.dup
       
         # 签名串 签名
         sign_list_array = []
