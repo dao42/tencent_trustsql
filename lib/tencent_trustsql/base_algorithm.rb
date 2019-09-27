@@ -6,11 +6,6 @@ module TencentTrustsql
       Digest::SHA256.digest data #hexdigest
     end
 
-    def self.hex_decode()
-      # todo  conver Java: Hex.decode(原字符串) to ruby methods
-      "todo hex_decode"
-    end
-
 
   end
 
