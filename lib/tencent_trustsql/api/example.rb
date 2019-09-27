@@ -11,7 +11,7 @@ module TencentTrustsql
           sign_type: 'ECDSA',
           chain_id: 'ch_tencent_testchain',
           mch_id: mch_id,
-          user_id: 1,
+          user_id: user_id,
           user_pub_key: public_key_out,
           timestamp: Time.now.to_i
         }
@@ -21,8 +21,13 @@ module TencentTrustsql
         end.compact.join('&')
         p query
 
-        p sign = TencentTrustsql.sign(TencentTrustsql.input_formatter.localize_private_key(private_key_out), query)
+        p sign = TencentTrustsql.sign(mch_private_key, query)
         p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+
+        params.merge!({mch_sign: sign_out})
+
+        response =HTTP.post(url, :form => params)
+        p   response.body.to_s
 
 
       end

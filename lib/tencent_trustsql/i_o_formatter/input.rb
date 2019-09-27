@@ -7,6 +7,7 @@ module TencentTrustsql
       end
 
       def localize_private_key hex_private_key
+        return nil if !hex_private_key
         Base64.decode64(hex_private_key).unpack('H*').first.hex
       end
 
