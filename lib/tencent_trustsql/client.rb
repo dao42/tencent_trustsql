@@ -2,6 +2,7 @@ module TencentTrustsql
   class Client
 
     include Api::Example
+    include Api::AssetIssue
 
     attr_accessor :mch_private_key, :mch_id
 
