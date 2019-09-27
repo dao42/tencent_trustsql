@@ -37,3 +37,16 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## Code of Conduct
 
 Everyone interacting in the TencentTrustsql project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/tencent_trustsql/blob/master/CODE_OF_CONDUCT.md).
+
+
+## Usage
+
+config/initialize/tencent_trustsql.rb
+TencentTrustsql.configure do |c|
+  c.mch_private_key = private_key_from_baas
+  c.mch_id = mch_id
+end
+client = TencentTrustsql::Clinet.new private_key, user_id
+# @params private_key  find it from your database or created_by TencentTrustsql.user_private_key
+# @params user_id  find it from your database
+client.test_idm_user_register

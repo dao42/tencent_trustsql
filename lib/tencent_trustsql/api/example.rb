@@ -4,7 +4,7 @@ module TencentTrustsql
 
 
 
-      def test_idm_user_register(mch_id="gb4pYTAXqzEI9TwDN5")
+      def test_idm_user_register
         url = "https://baas.qq.com/tpki/tpki.TpkiSrv.UserApply"
         params = {
           version: '1.0',

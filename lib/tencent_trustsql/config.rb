@@ -24,7 +24,7 @@ module TencentTrustsql
   end
 
   class Config
-    attr_accessor :mch_private_key, :mch_private_key_local
+    attr_accessor :mch_private_key, :mch_private_key_local, :mch_id
     # config/initialize/tencent_trustsql.rb
     # TencentTrustsql.configure do |config|
     #   config.mch_private_key = private_key from baas
