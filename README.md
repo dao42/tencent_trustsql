@@ -30,9 +30,18 @@ Or install it yourself as:
       c.mch_private_key = private_key_from_baas
       c.mch_id = mch_id
     end
-    client = TencentTrustsql::Client.new private_key, user_id
-    client.test_idm_user_register
+    client = TencentTrustsql::Client.new
+    client.test_idm_user_register(private_key, user_id)
 ```
+## 资产发行申请接口
+```ruby
+    client = TencentTrustsql::Client.new
+    client.apply(options)
+```
+
+
+
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
