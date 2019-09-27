@@ -2,9 +2,12 @@ module TencentTrustsql
   module Api
     module Tpki
 
-      def user_get user_id
+      def user_get(options={})
         url = URL_BASE + 'UserGet'
-        params = base_params.merge user_id: user_id, timestamp: Time.now.to_i
+        params = BASE_PARAMS.merge(options).merge({
+                   timestamp: Time.now.to_i,
+                   mch_id: mch_id
+                 })
         query = TencentTrustsql.params_to_string params
 
         p sign = TencentTrustsql.sign(mch_private_key, query)
@@ -12,13 +15,10 @@ module TencentTrustsql
 
         params.merge!({mch_sign: sign_out})
 
-        p '1231231231231231231231'
         p url
         p params
-        p '----------------------'
 
         response =HTTP.post(url, :json => params)
-        p '333333333333333333333333333'
         p   response.body.to_s
 
       end
