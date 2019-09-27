@@ -3,14 +3,9 @@ module TencentTrustsql
     module Example
 
 
-      # @params private_key Integer
-      # of course you can change it to string by add
-      # private_key = TencentTrustsql.input_formatter.localize_private_key(private_key)
-      # you can also change this methods to instance methods
-      def self.test_idm_user_register(private_key,mch_id="gb4pYTAXqzEI9TwDN5")
+
+      def test_idm_user_register(mch_id="gb4pYTAXqzEI9TwDN5")
         url = "https://baas.qq.com/tpki/tpki.TpkiSrv.UserApply"
-        public_key = TencentTrustsql.public_key private_key
-        public_key_out = TencentTrustsql.output_formatter.out_public_key(public_key)
         params = {
           version: '1.0',
           sign_type: 'ECDSA',
@@ -26,7 +21,7 @@ module TencentTrustsql
         end.compact.join('&')
         p query
 
-        p sign = TencentTrustsql.sign(private_key, query)
+        p sign = TencentTrustsql.sign(TencentTrustsql.input_formatter.localize_private_key(private_key_out), query)
         p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
 
 
