@@ -22,8 +22,17 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
-
+```ruby
+    private_key = TencentTrustsql.user_private_key
+    user_id = uid(database user id)
+    config/initialize/tencent_trustsql.rb
+    TencentTrustsql.configure do |c|
+      c.mch_private_key = private_key_from_baas
+      c.mch_id = mch_id
+    end
+    client = TencentTrustsql::Client.new private_key, user_id
+    client.test_idm_user_register
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -39,14 +48,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 Everyone interacting in the TencentTrustsql project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/tencent_trustsql/blob/master/CODE_OF_CONDUCT.md).
 
 
-## Usage
-
-config/initialize/tencent_trustsql.rb
-TencentTrustsql.configure do |c|
-  c.mch_private_key = private_key_from_baas
-  c.mch_id = mch_id
-end
-client = TencentTrustsql::Clinet.new private_key, user_id
-# @params private_key  find it from your database or created_by TencentTrustsql.user_private_key
-# @params user_id  find it from your database
-client.test_idm_user_register
