@@ -2,30 +2,26 @@ module TencentTrustsql
   module Api
     module AssetIssue
 
-      def asset_apply(options={})
-
-        url = "http://123.207.249.116:15910/asset_issue_apply"
-        params = {
+      def asset_base_params
+        {
             version: '2.0',
             sign_type: 'ECDSA',
-            chain_id: 'ch_tencent_testchain',
             mch_id: mch_id,
             timestamp: Time.now.to_i
         }
-        params.merge!(options)
-        query = params.sort.map do |k, v|
-          "#{k}=#{v}" if v.to_s != ''
-        end.compact.join('&')
-        p query
+      end
 
-        p sign = TencentTrustsql.sign(mch_private_key, query)
-        p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+      def send_json_request(url,params)
+        p sign_out = mch_sign(params)
+        p params.merge!({ mch_sign: sign_out })
+        response =HTTP.post(url, json:  params)
+        JSON.parse(response.body)
+      end
 
-        params.merge!({mch_sign: sign_out})
-
-        response =HTTP.post(url, json: params)
-        p   response.body.to_s
-
+      def asset_apply(options={})
+        url = "http://123.207.249.116:15910/asset_issue_apply"
+        params = asset_base_params.merge!(options)
+        send_json_request(url,params)
       end
     end
   end

@@ -25,7 +25,6 @@ module TencentTrustsql
 
       def send_request(url,params={})
 
-
         p sign_out = mch_sign(params)
         p params.merge!({ mch_sign: sign_out })
 
