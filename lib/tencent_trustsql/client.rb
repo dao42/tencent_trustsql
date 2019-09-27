@@ -2,6 +2,8 @@ module TencentTrustsql
   class Client
 
     include Api::Example
+    include Api::AssetIssue
+    include Api::Tpki
 
     attr_accessor :mch_private_key, :mch_id
 
@@ -12,8 +14,12 @@ module TencentTrustsql
 
 
 
+    def http_post dir, opts={}
+      case dir
+        when 'other' then ''
 
-
+      end
+    end
 
 
   end
