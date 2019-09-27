@@ -21,6 +21,6 @@ module TencentTrustsql
 
       end
     end
-    
+
   end
 end
