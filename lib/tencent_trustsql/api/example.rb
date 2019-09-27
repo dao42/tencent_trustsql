@@ -4,8 +4,11 @@ module TencentTrustsql
 
 
 
-      def test_idm_user_register
+      def test_idm_user_register private_key_out, user_id
         url = "https://baas.qq.com/tpki/tpki.TpkiSrv.UserApply"
+
+        public_key_out = TencentTrustsql.encoded_public_key private_key_out
+
         params = {
           version: '1.0',
           sign_type: 'ECDSA',
