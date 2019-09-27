@@ -3,6 +3,8 @@ module TencentTrustsql
 
     include Api::Example
     include Api::AssetIssue
+    include Api::User
+    include Api::Account
 
     attr_accessor :mch_private_key, :mch_id
 
@@ -10,12 +12,6 @@ module TencentTrustsql
       @mch_private_key = TencentTrustsql.mch_private_key_local
       @mch_id = TencentTrustsql.mch_id
     end
-
-
-
-
-
-
 
   end
 end
