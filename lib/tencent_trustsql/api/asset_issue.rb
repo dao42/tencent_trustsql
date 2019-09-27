@@ -1,6 +1,7 @@
 module TencentTrustsql
   module Api
     module AssetIssue
+
       def apply(options={})
 
         url = "http://123.207.249.116:15910/asset_issue_apply"
@@ -29,3 +30,4 @@ module TencentTrustsql
     end
   end
 end
+

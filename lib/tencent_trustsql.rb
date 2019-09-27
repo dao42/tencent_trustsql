@@ -18,8 +18,10 @@ module TencentTrustsql
   include IOFormatter
 
   CURVE = ECDSA::Group::Secp256k1
-  # INPUT_FORMATTER = IOFormatter::Input.new
-  # OUT_FORMATTER = IOFormatter::Output.new
+
+  BASE_PARAMS = {
+
+  }
 
   # 产生一对公私钥, 并返回
   def self.generate_pair_key
