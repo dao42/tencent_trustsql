@@ -12,10 +12,16 @@ module TencentTrustsql
           version: "2.0",
           sign_type: 'ECDSA',
           mch_id: mch_id,
-          chain_id: ''
-
+          chain_id: 'ch_tencent_testchain',
+          timestamp: Time.now.to_i
         }
       end
+
+      BASE_PARAMS = {
+        version: "2.0",
+        sign_type: 'ECDSA',
+        chain_id: 'ch_tencent_testchain'
+      }
     end
 
     module Iss
@@ -29,14 +35,19 @@ module TencentTrustsql
     module Tpki
       URL_BASE = "https://baas.qq.com/tpki/tpki.TpkiSrv."
 
-      def base_params
-        {
-          version: '1.0',
-          sign_type: 'ECDSA',
-          chain_id: 'ch_tencent_testchain',
-          mch_id: mch_id
-        }
-      end
+      BASE_PARAMS = {
+        version: '1.0',
+        sign_type: 'ECDSA',
+        chain_id: 'ch_tencent_testchain'
+      }
+      # def base_params
+      #   {
+      #     version: '1.0',
+      #     sign_type: 'ECDSA',
+      #     chain_id: 'ch_tencent_testchain',
+      #     mch_id: mch_id
+      #   }
+      # end
     end
 
   end
