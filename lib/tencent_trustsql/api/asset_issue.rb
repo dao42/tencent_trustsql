@@ -53,6 +53,50 @@ module TencentTrustsql
 
       end
 
+      # 资产转让申请
+      def asset_transfer_apply(account_options,src_asset_list, amount = 1, node_ip = '123.207.249.116' , node_port = '15910', asset_type = 0,chain_id='ch_tencent_testchain')
+        # url = "http://123.207.249.116:15910/asset_transfer_apply"
+        action = "asset_transfer_apply"
+        url = "http://#{node_ip}:#{node_port}/#{action}"
+        p url
+        # 通讯方公钥
+        mch_pubkey = TencentTrustsql.encoded_public_key mch_private_key
+        params = {
+          version: '2.0',
+          sign_type: 'ECDSA',
+          mch_id: mch_id,
+          chain_id: chain_id,
+          mch_pubkey: mch_pubkey,
+
+          src_uid: account_options[:src_uid],
+          src_account: account_options[:src_account],
+          src_account_pubkey:account_options[:src_account_pubkey],
+          dst_uid: account_options[:dst_uid],
+          dst_account: account_options[:dst_account],
+          dst_account_pubkey: account_options[:dst_account_pubkey],
+
+          asset_type: asset_type,
+          src_asset_list: src_asset_list,
+          amount: amount,
+          timestamp: Time.now.to_i
+        }
+
+        query = params.sort.map do |k, v|
+          "#{k}=#{v}" if v.to_s != ''
+        end.compact.join('&')
+        p query
+
+        p sign = TencentTrustsql.sign(mch_private_key, query)
+        p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+
+        params.merge!({mch_sign: sign_out})
+
+        p params
+
+        response =HTTP.post(url, json: params)
+        p response.body.to_s
+
+      end
 
       # 资产直接转让提交
       #
