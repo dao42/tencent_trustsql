@@ -27,6 +27,14 @@ module TencentTrustsql
         http_post url, params
       end
 
+      def account_get_list(private_key_out, options={})
+        url = URL_BASE + 'AccountGetList'
+        public_key_out = TencentTrustsql.encoded_public_key private_key_out
+        # params = tpki_base_params.merge!({ acc_pub_key: public_key_out })
+        params = {acc_pub_key: public_key_out, **tpki_base_params, **options}
+
+        http_post url, params
+      end
     end
   end
 end
