@@ -90,8 +90,7 @@ module TencentTrustsql
         p params
 
         response =HTTP.post(url, json: params)
-        p response.body.to_s
-
+        p   JSON.parse(response.body.to_s)
       end
 
       # 资产直接转让提交
@@ -99,32 +98,52 @@ module TencentTrustsql
       # transaction_id 唯一标识一次交易的ID(资产直接转让申请 返回结果） string
       # sign_list 原待签名串（资产直接转让申请 返回结果） jsonArray
       def asset_transfer_submit(options={})
-        action = "asset_transfer_submit"
-        node_ip = options.delete(:node_ip)
-        node_port = options.delete(:node_port)
-        url = "http://#{node_ip}:#{node_port}/#{action}"
-
+        url = URL_BASE + '/asset_transfer_submit'
         user_private_key = options.delete(:user_private_key)
-
         params = BASE_PARAMS.merge(options).merge({
-                   mch_id: mch_id,
-                   timestamp: Time.now.to_i
-                 })
-
+                                                      mch_id: mch_id,
+                                                      timestamp: Time.now.to_i
+                                                  })
         p params
         p sign = TencentTrustsql.trans_sign(user_private_key, params[:sign_list].first['sign_str'])
         p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+
         params[:sign_list].first['sign'] = sign_out
 
         p query = TencentTrustsql.params_to_string(params).gsub(':', '').gsub('=>', ':').gsub(' ', '')
         p sign = TencentTrustsql.sign(mch_private_key, query)
         p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
-        params.merge!({mch_sign: sign_out})
 
+        params.merge!({mch_sign: sign_out})
         p params
         p url
         response =HTTP.post(url, :json => params)
-        p   response.body.to_s
+        p   JSON.parse(response.body.to_s)
+        # node_ip = "123.207.249.116"#options.delete(:node_ip)
+        # node_port = "15910"#options.delete(:node_port)
+        # url = "http://#{node_ip}:#{node_port}/#{action}"
+        #
+        # user_private_key = options.delete(:user_private_key)
+        #
+        # params = BASE_PARAMS.merge(options).merge({
+        #            mch_id: mch_id,
+        #            timestamp: Time.now.to_i
+        #          })
+        #
+        # p params
+        # p sign = TencentTrustsql.trans_sign(user_private_key, params[:sign_list].first['sign_str'])
+        # p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+        # params[:sign_list].first['sign'] = sign_out
+        #
+        # p query = TencentTrustsql.params_to_string(params).gsub(':', '').gsub('=>', ':').gsub(' ', '')
+        # p sign = TencentTrustsql.sign(mch_private_key, query)
+        # p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+        # params.merge!({mch_sign: sign_out})
+        #
+        # p params
+        # p url
+        # response =HTTP.post(url, :json => params)
+        # JSON.parse(response.body.to_s)
       end
       # def asset_transfer_submit transaction_id, sign_list, node_ip = '123.207.249.116' , node_port = '15910', asset_type = 1,chain_id='ch_tencent_testchain'
       #   action = "asset_transfer_submit"
