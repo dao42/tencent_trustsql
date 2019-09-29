@@ -2,25 +2,29 @@ module TencentTrustsql
   module Api
     module Tpki
 
+      def user_apply(private_key_out, options={})
+        url = URL_BASE + 'UserApply'
+        public_key_out = TencentTrustsql.encoded_public_key private_key_out
+
+        params = {user_pub_key: public_key_out, **tpki_base_params, **options}
+
+        http_post url, params
+      end
+
       def user_get(options={})
         url = URL_BASE + 'UserGet'
-        params = BASE_PARAMS.merge(options).merge({
-                   timestamp: Time.now.to_i,
-                   mch_id: mch_id
-                 })
-        query = TencentTrustsql.params_to_string params
+        params = tpki_base_params.merge(options)
 
-        p sign = TencentTrustsql.sign(mch_private_key, query)
-        p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+        http_post url, params
+      end
 
-        params.merge!({mch_sign: sign_out})
+      def account_apply(private_key_out, options={})
+        url = URL_BASE + 'AccountApply'
+        public_key_out = TencentTrustsql.encoded_public_key private_key_out
+        # params = tpki_base_params.merge!({ acc_pub_key: public_key_out })
+        params = {acc_pub_key: public_key_out, **tpki_base_params, **options}
 
-        p url
-        p params
-
-        response =HTTP.post(url, :json => params)
-        p   response.body.to_s
-
+        http_post url, params
       end
 
     end
