@@ -27,7 +27,7 @@ module TencentTrustsql
       def commit(options={})
         url = URL_BASE + '/asset_issue_submit'
         user_private_key = options.delete(:user_private_key)
-        params = base_params.merge(options).merge({
+        params = BASE_PARAMS.merge(options).merge({
                    mch_id: mch_id,
                    timestamp: Time.now.to_i
                  })
@@ -98,51 +98,74 @@ module TencentTrustsql
       #
       # transaction_id 唯一标识一次交易的ID(资产直接转让申请 返回结果） string
       # sign_list 原待签名串（资产直接转让申请 返回结果） jsonArray
-      def asset_transfer_submit transaction_id, sign_str_list, node_ip = '123.207.249.116' , node_port = '15910', asset_type = 0,chain_id='ch_tencent_testchain'
-        action = "asset_issue_submit"
+      def asset_transfer_submit(options={})
+        action = "asset_transfer_submit"
+        node_ip = options.delete(:node_ip)
+        node_port = options.delete(:node_port)
         url = "http://#{node_ip}:#{node_port}/#{action}"
 
-        sign_list_dump = sign_str_list.dup
+        user_private_key = options.delete(:user_private_key)
 
-        # 签名串 签名
-        sign_list_array = []
-        sign_list_dump.each do |sign_hash|
-          sign_hash_tmp = {}
-          sign = TencentTrustsql.trans_sign(mch_private_key, sign_hash["sign_str"] || sign_hash[:sign_str])
-          sign_out = TencentTrustsql.output_formatter.out_sign(sign)
-          sign_hash_tmp["account"] = sign_hash["account"] || sign_hash[:account]
-          sign_hash_tmp["sign_str"] = sign_hash["sign_str"] || sign_hash[:sign_str]
-          sign_hash_tmp["id"] = sign_hash["id"] || sign_hash[:id]
-          sign_hash_tmp["sign"] = sign_out
-          sign_list_array << JSON.parse(sign_hash.to_json)
-        end
-        puts sign_list_array
+        params = BASE_PARAMS.merge(options).merge({
+                   mch_id: mch_id,
+                   timestamp: Time.now.to_i
+                 })
 
-        # 通讯方公钥
-        mch_pubkey = TencentTrustsql.encoded_public_key mch_private_key
+        p params
+        p sign = TencentTrustsql.trans_sign(user_private_key, params[:sign_list].first['sign_str'])
+        p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+        params[:sign_list].first['sign'] = sign_out
 
-        params = {}
-        params["mch_pubkey"] = mch_pubkey
-        params["timestamp"] = Time.now.to_i
-        params["sign_list"] =  sign_list_array
-        params["chain_id"] =  chain_id
-        params["mch_id"] =  mch_id
-        params["version"] =  "2.0"
-        params["sign_type"] =  "ECDSA"
-        params["asset_type"] =  asset_type
-        params["transaction_id"] =  transaction_id
+        p query = TencentTrustsql.params_to_string(params).gsub(':', '').gsub('=>', ':').gsub(' ', '')
+        p sign = TencentTrustsql.sign(mch_private_key, query)
+        p sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+        params.merge!({mch_sign: sign_out})
 
-
-      p query = TencentTrustsql.params_to_string(params).gsub(':', '').gsub('=>', ':').gsub(' ', '')
-        sign = TencentTrustsql.sign(mch_private_key, query)
-        sign_out = TencentTrustsql.output_formatter.out_sign(sign)
-
-        p params.merge!({mch_sign: sign_out})
-
-        response =HTTP.post(url, json: params)
+        p params
+        p url
+        response =HTTP.post(url, :json => params)
         p   response.body.to_s
-
       end
+      # def asset_transfer_submit transaction_id, sign_list, node_ip = '123.207.249.116' , node_port = '15910', asset_type = 1,chain_id='ch_tencent_testchain'
+      #   action = "asset_transfer_submit"
+      #   url = "http://#{node_ip}:#{node_port}/#{action}"
+      #   sign_list_dump = sign_list.dup
+
+      #   # 签名串 签名
+      #   sign_list_array = []
+      #   sign_list_dump.each do |sign_hash|
+      #     sign = TencentTrustsql.trans_sign(mch_private_key, sign_hash["sign_str"] || sign_hash[:sign_str])
+      #     sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+      #     sign_hash["sign"] = sign_out
+      #     sign_list_array << JSON.parse(sign_hash.to_json)
+      #   end
+      #   puts sign_list_array
+
+      #   # 通讯方公钥
+      #   mch_pubkey = TencentTrustsql.encoded_public_key mch_private_key
+
+      #   params = {}
+      #   params["mch_pubkey"] = mch_pubkey
+      #   params["timestamp"] = Time.now.to_i
+      #   params["sign_list"] =  sign_list_array
+      #   params["chain_id"] =  chain_id
+      #   params["mch_id"] =  mch_id
+      #   params["version"] =  "2.0"
+      #   params["sign_type"] =  "ECDSA"
+      #   params["asset_type"] =  asset_type
+      #   params["transaction_id"] =  transaction_id
+
+
+      # p query = TencentTrustsql.params_to_string(params).gsub(':', '').gsub('=>', ':').gsub(' ', '')
+      #   sign = TencentTrustsql.sign(mch_private_key, query)
+      #   sign_out = TencentTrustsql.output_formatter.out_sign(sign)
+
+      #   p params.merge!({mch_sign: sign_out})
+
+      #   response =HTTP.post(url, json: params)
+      #   p   response.body.to_s
+
+      # end
 
     end
   end
