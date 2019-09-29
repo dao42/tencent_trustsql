@@ -11,15 +11,11 @@ module TencentTrustsql
       end
 
       # 资产转让申请
-      def asset_transfer_apply(node_ip, node_port, options={})(account_options,src_asset_list, amount = 1, node_ip = '123.207.249.116' , node_port = '15910', asset_type = 0,chain_id='ch_tencent_testchain')
+      def asset_transfer_apply(node_ip, node_port, options={})
         asset_apply_base __method__, node_ip, node_port, options
-
       end
 
       # 资产直接转让提交
-      #
-      # transaction_id 唯一标识一次交易的ID(资产直接转让申请 返回结果） string
-      # sign_list 原待签名串（资产直接转让申请 返回结果） jsonArray
       def asset_transfer_submit(node_ip, node_port, options={})
         asset_commit_base __method__, node_ip, node_port, options
       end
