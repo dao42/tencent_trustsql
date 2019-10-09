@@ -21,10 +21,9 @@ module TencentTrustsql
         p "obj --------- #{obj}"
         p obj.keys
         [:account, :sign_str, :id].each do |key|
-          signed_obj["#{key.to_s}"] = obj[key] || obj[key.to_sym]
+          signed_obj["#{key.to_s}"] = obj[key] || obj[key.to_s]
         end
         p signed_obj['sign_str']
-        p user_private_key
         sign = TencentTrustsql.trans_sign user_private_key, signed_obj['sign_str']
         p a = TencentTrustsql.output_formatter.out_sign(sign)
         signed_obj['sign'] = a#TencentTrustsql.output_formatter.out_sign sign
