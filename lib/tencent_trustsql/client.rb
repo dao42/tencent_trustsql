@@ -6,7 +6,7 @@ module TencentTrustsql
 
     attr_accessor :mch_private_key, :mch_id, :mch_public_key_out
 
-    def initialize
+    def initialize mch_private_key = nil
       @mch_private_key = TencentTrustsql.mch_private_key_local
       @mch_id = TencentTrustsql.mch_id
       @mch_public_key_out = TencentTrustsql.encoded_public_key  @mch_private_key
