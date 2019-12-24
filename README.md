@@ -73,3 +73,34 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 
 Everyone interacting in the TencentTrustsql project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/tencent_trustsql/blob/master/CODE_OF_CONDUCT.md).
 
+### update to 0.1.5
+
+- Attention
+
+nested json params
+
+```json
+params = {
+    chain_id: 'xxx',
+    "extra_info": {
+        "asset_name"=> "asset.name",
+        "asset_type"=> "asset.asset_type",
+        "note"=> "note"
+    }
+  }
+```
+
+- New Features
+
+交易批量查询
+
+```ruby
+query_options = {
+        "chain_id": 'ch_tencent_testchain',
+        "page_limit": 3,
+        "transaction_id": 'transaction_id_xxx',
+        "page_no": 1
+      }
+
+client.trans_batch_query(node_ip, node_port, query_options)
+```

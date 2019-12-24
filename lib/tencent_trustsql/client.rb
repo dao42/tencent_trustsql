@@ -45,6 +45,7 @@ module TencentTrustsql
       p url
 
       response =HTTP.post(url, json:  params)
+      puts response.body
       JSON.parse(response.body) rescue nil
     end
 

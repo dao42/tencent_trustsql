@@ -20,6 +20,20 @@ module TencentTrustsql
         asset_commit_base __method__, node_ip, node_port, options
       end
 
+      # 交易批量查询
+      # {
+      #   "sign_type": "ECDSA",
+      #   "chain_id": "chain_id",
+      #   "page_limit": 3,
+      #   "transaction_id": 'transaction_id'
+      #   "page_no": 1
+      # }
+      def trans_batch_query(node_ip, node_port, options={})
+        url = "http://#{node_ip}:#{node_port}/#{__method__}"
+        params = asset_base_params.merge(options)
+        http_post(url,params)
+      end
+
       def asset_apply_base name, *args
         url_map = {
           asset_apply: 'asset_issue_apply',

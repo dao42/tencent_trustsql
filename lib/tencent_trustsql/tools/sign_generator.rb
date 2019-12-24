@@ -15,7 +15,8 @@ module TencentTrustsql
           query = items.sort.map do |k, v|
             "#{k}=#{v}" if v.to_s != ''
           end.compact.join('&')
-          p query
+          puts query
+          query
         end
 
         def sign private_key, data

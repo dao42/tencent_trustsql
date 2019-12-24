@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tencent_trustsql (0.1.0)
+    tencent_trustsql (0.1.5)
       ecdsa (~> 1.2)
       http (~> 2.2)
 
@@ -37,4 +37,4 @@ DEPENDENCIES
   tencent_trustsql!
 
 BUNDLED WITH
-   2.0.1
+   2.0.2
