@@ -83,9 +83,11 @@ nested json params
 params = {
     chain_id: 'xxx',
     "extra_info": {
-        "asset_name"=> "asset.name",
-        "asset_type"=> "asset.asset_type",
-        "note"=> "note"
+      "asset_name": "asset.name",
+      "asset_type": "asset.asset_type",
+      "note": "note 中文",
+      "test_array": [1, 2, "中文 value"],
+      "test_hash": {"k": "v"}
     }
   }
 ```

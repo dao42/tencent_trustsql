@@ -13,6 +13,7 @@ module TencentTrustsql
 
         def params_to_string items
           query = items.sort.map do |k, v|
+            v = v.to_json if v.class != String 
             "#{k}=#{v}" if v.to_s != ''
           end.compact.join('&')
           puts query

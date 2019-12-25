@@ -36,9 +36,9 @@ module TencentTrustsql
 
     def http_post url, params
       # sign
-      query = TencentTrustsql.params_to_string(params).gsub(':', '').gsub('=>', ':').gsub(' ', '')
+      query = TencentTrustsql.params_to_string(params)
       mch_sign = TencentTrustsql.output_formatter.out_sign(TencentTrustsql.sign(mch_private_key, query))
-
+      p 'http_post mch_sign used query' + query
       params.merge!(mch_sign: mch_sign)
 
       p params
