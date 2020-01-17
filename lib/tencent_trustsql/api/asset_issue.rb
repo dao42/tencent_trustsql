@@ -40,6 +40,12 @@ module TencentTrustsql
         http_post(url, params)
       end
 
+      def asset_rec_detail_query(node_ip, node_port, options = {})
+        url = "http://#{node_ip}:#{node_port}/#{__method__}"
+        params = asset_base_params.merge(timestamp: Time.now.to_i.to_s, **options)
+        http_post(url, params)
+      end
+
       def asset_apply_base name, *args
         url_map = {
           asset_apply: 'asset_issue_apply',
