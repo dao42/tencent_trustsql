@@ -34,6 +34,12 @@ module TencentTrustsql
         http_post(url, params)
       end
 
+      def asset_account_query(node_ip, node_port, options={})
+        url = "http://#{node_ip}:#{node_port}/#{__method__}"
+        params = asset_base_params.merge(options)
+        http_post(url, params)
+      end
+
       def trans_rec_detail_query(node_ip, node_port, options = {})
         url = "http://#{node_ip}:#{node_port}/#{__method__}"
         params = asset_base_params.merge(timestamp: Time.now.to_i.to_s, **options)
